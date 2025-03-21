@@ -14,8 +14,16 @@ variable "local_admin" {
     local_admin = string
     password = string
   })
-  
 }
+
+variable "script_path" {
+  type = string
+}
+/*
+variable "template_vhd_path" {
+  type = string
+}
+*/
 
 #variable vm_specs list of objects
 variable "vm_specs" {
@@ -31,7 +39,6 @@ variable "vm_specs" {
     dynamic_memory           = bool
     path                     = string
     template_vhd_path        = string
-    script_path              = string
     vm_disks                 = list(object({
       vhd_size_gb            = number    #in gb
     }))
@@ -42,5 +49,11 @@ variable "vm_specs" {
         #vlan_id              = number
         dynamic_mac_address  = bool
     }))
+    network_configurations   = list(object({
+        IPAddress            = string
+        PrefixLength         = number
+        Gateway              = string
+        DNSServers           = list(string)
+    })) 
   }))
 }
