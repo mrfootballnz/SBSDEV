@@ -153,13 +153,12 @@ resource "hyperv_machine_instance" "vms" {
 }
 
 resource "null_resource" "setup_network" {
-  for_each = { for vm in var.vm_specs : vm.name => vm }
-  #for_each = { for idx, vm in var.vm_specs : idx => vm }
+  #for_each = { for vm in var.vm_specs : vm.name => vm }
 
   depends_on = [hyperv_machine_instance.vms]
 
   provisioner "local-exec" {
-    command = "pwsh -ExecutionPolicy Bypass -File ${var.script_path} -VmName '${each.value.name}' -localAdmin '${var.local_admin.local_admin}' -password '${var.local_admin.password}' -NetworkConfigurations '${jsonencode(each.value.network_configurations)}'"
-    interpreter = ["pwsh", "-Command"]
+  command     = "pwsh -ExecutionPolicy Bypass -File C:\\Repository\\SBSDEV\\config_network_multi_vms.ps1"
+  interpreter = ["pwsh", "-Command"]
 }
 }

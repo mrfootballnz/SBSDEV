@@ -49,11 +49,5 @@ variable "vm_specs" {
         #vlan_id              = number
         dynamic_mac_address  = bool
     }))
-    network_configurations   = list(object({
-        IPAddress            = string
-        PrefixLength         = number
-        Gateway              = string
-        DNSServers           = list(string)
-    })) 
   }))
 }
